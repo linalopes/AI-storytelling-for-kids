@@ -80,8 +80,8 @@ def recognize_object(picture_name):
     print('Confidence score:', confidence_score)
     recognized_objects.append(class_name)
 
-for x in range(2):
-  capture_pictures("picture"+str(x))
+# for x in range(2):
+#   capture_pictures("picture"+str(x))
 
 for x in range(2):
   recognize_object("picture"+str(x))
