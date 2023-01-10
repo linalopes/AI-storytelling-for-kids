@@ -20,7 +20,7 @@ def capture_pictures(picture_name):
   # initializing  the camera
   pygame.camera.init()
     
-  # make the list of all available cameras
+  # make the list of all available cameras 
   camlist = pygame.camera.list_cameras()
     
   # if camera is detected or not
