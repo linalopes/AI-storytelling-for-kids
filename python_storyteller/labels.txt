@@ -1,0 +1,6 @@
+0 Hat
+1 House
+2 Little girl
+3 Car
+4 The thing
+5 Rabbit
