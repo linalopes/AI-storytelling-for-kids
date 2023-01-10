@@ -5,8 +5,14 @@ import pygame.camera
 from keras.models import load_model
 from PIL import Image, ImageOps  #Install pillow instead of PIL
 import numpy as np
+import time
 
 recognized_objects = []
+
+# delay first picture capture to ensure camera is on
+# global variable to use during several calls of capture_pictures
+global delay
+delay = True
 
 def capture_pictures(picture_name):
   input('Press enter to continue to take the picture: ' + picture_name)
@@ -25,6 +31,13 @@ def capture_pictures(picture_name):
     # opening the camera
     cam.start()
     
+    # first image always empty, leading to Confidence score: 0.3827054
+    # add delay to ensure camera is open prior to calling get_image()
+    global delay
+    if delay == True:
+      time.sleep(1.5) # Sleep x seconds, 0.5 still 1st empty, 1 works, 1.5 for safety margin
+      delay = False
+
     # capturing the single image
     image = cam.get_image()
     
@@ -37,7 +50,7 @@ def capture_pictures(picture_name):
 
 
 def recognize_object(picture_name):
-    input('Press enter to recognize object:  ' + picture_name)
+    # input('Press enter to recognize object:  ' + picture_name)
     print("Recognizing object ....")
     # Disable scientific notation for clarity
     np.set_printoptions(suppress=True)
@@ -80,8 +93,9 @@ def recognize_object(picture_name):
     print('Confidence score:', confidence_score)
     recognized_objects.append(class_name)
 
-# for x in range(2):
-#   capture_pictures("picture"+str(x))
+# capture new pictures
+for x in range(2):
+  capture_pictures("picture"+str(x))
 
 for x in range(2):
   recognize_object("picture"+str(x))
@@ -120,7 +134,12 @@ for character in characters:
 sentence = "Tell me a short story for kids about a " + prop_to_sentence + " and a " + character_to_sentence + " who " + random_action + "."
 print(sentence)
 
-openai.api_key = "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"
+# api_key Jan
+# openai.api_key = "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" 
+
+# api_key Fadri
+openai.api_key = "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"
+
 # print(openai.Model.list())
 
 response = openai.Completion.create(
